@@ -50,8 +50,15 @@ public class PlayerHealth : LivingEntity {
 
 	// 데미지 처리
 	public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitDirection) {
+		if (!dead) {
+			// 사망하지 않은 경우에만 효과음 재생
+			playerAudioPlayer.PlayOneShot(hitClip);
+		}
+
 		// LivingEntity의 OnDamage() 실행(데미지 적용)
 		base.OnDamage(damage, hitPoint, hitDirection);
+		// 갱신된 체력을 체력 슬라이더에 반영
+		healthSlider.value = health;
 	}
 
 	// 사망 처리
